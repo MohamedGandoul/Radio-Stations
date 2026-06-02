@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b1120;
+    color: #edf2f7;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.16), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.14), transparent 28%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+    color: #fbbf24;
+}
+
+.header p {
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.player,
+.stations-section {
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.player {
+    margin-bottom: 24px;
+}
+
+.album-art {
+    margin-bottom: 20px;
+}
+
+.album-placeholder {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rotate 10s linear infinite paused;
+}
+
+.album-placeholder.playing {
+    animation-play-state: running;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.album-placeholder i {
+    font-size: 3.2rem;
+    color: #fff;
+}
+
+.song-info {
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.song-info h2 {
+    font-size: 1.7rem;
+    margin-bottom: 8px;
+    color: #fbbf24;
+}
+
+.song-info p {
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.control-btn,
+.play-pause-btn {
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.control-btn {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+    border-radius: 50%;
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(251, 191, 36, 0.2);
+}
+
+.play-pause-btn {
+    width: 72px;
+    height: 72px;
+    background: #f59e0b;
+    font-size: 1.9rem;
+    border-radius: 50%;
+    box-shadow: 0 14px 28px rgba(245, 158, 11, 0.28);
+}
+
+.play-pause-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.volume-control i {
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+
+#volume-slider {
+    width: 200px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    appearance: none;
+    outline: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fbbf24;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #fbbf24;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.stations-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fbbf24;
+}
+
+.stations-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.station-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 18px;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.station-card:hover {
+    background: rgba(251, 191, 36, 0.14);
+    transform: translateY(-2px);
+}
+
+.station-card.active {
+    background: rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.35);
+}
+
+.station-card h3 {
+    margin-bottom: 8px;
+    color: #fbbf24;
+    font-size: 1rem;
+}
+
+.station-card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 16px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .player,
+    .stations-section {
+        padding: 20px;
+    }
+
+    .album-placeholder {
+        width: 140px;
+        height: 140px;
+    }
+
+    .controls {
+        gap: 12px;
+    }
+
+    #volume-slider {
+        width: 170px;
+    }
+
+    .stations-list {
+        grid-template-columns: 1fr;
+    }
+}

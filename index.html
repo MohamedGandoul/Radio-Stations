@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Radio - Listen Live</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🇩🇪 German Radio</h1>
+            <p>Listen to the best German radio stations online</p>
+        </header>
+
+        <!-- Player -->
+        <div class="player">
+            <div class="album-art">
+                <div class="album-placeholder">
+                    <i class="fas fa-radio"></i>
+                </div>
+            </div>
+            
+            <div class="song-info">
+                <h2 id="station-name">Select a Station</h2>
+                <p id="song-title">Loading...</p>
+            </div>
+
+            <div class="controls">
+                <button id="prev-btn" class="control-btn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                
+                <button id="play-pause-btn" class="play-pause-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+                
+                <button id="next-btn" class="control-btn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+            </div>
+
+            <div class="volume-control">
+                <i class="fas fa-volume-down"></i>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8">
+                <i class="fas fa-volume-up"></i>
+            </div>
+
+            <audio id="audio-player"></audio>
+        </div>
+
+        <!-- Stations List -->
+        <div class="stations-section">
+            <h2>🎵 Available Stations</h2>
+            <div id="stations-list" class="stations-list"></div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
