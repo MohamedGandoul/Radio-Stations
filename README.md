@@ -94,3 +94,16 @@ Listen to live broadcasts from Germany right in your browser. No downloads, no a
 </div>
 
 ---
+---
+
+## 🖼️ Project Preview
+
+<div align="center">
+
+### Here's how it looks!
+
+<img src="/img/Screenshot 2026-06-03 010034.png" width="400" alt="Radio interface preview 1">
+
+<img src="img/Screenshot 2026-06-03 010051.png" width="400" alt="Radio interface preview 2">
+
+</div>
