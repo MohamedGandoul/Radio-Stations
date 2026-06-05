@@ -1,4 +1,4 @@
-// ✓ German Radio Stations - All streams verified and working
+// German Radio Stations
 const stations = [
     {
         name: "Deutschlandfunk",
@@ -27,7 +27,7 @@ const stations = [
     }
 ];
 
-// ✓ Player Elements
+// Player Elements
 const audio = document.getElementById('audio-player');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
@@ -36,15 +36,16 @@ const stationName = document.getElementById('station-name');
 const songTitle = document.getElementById('song-title');
 const stationsList = document.getElementById('stations-list');
 const albumPlaceholder = document.querySelector('.album-placeholder');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
 
-// ✓ Variables
+// Variables
 let currentIndex = 0;
-let isPlaying = false;
 
-// ✓ Display Stations
+// Display Stations
 function displayStations() {
     stationsList.innerHTML = '';
-    
+
     stations.forEach((station, index) => {
         const card = document.createElement('div');
         card.className = `station-card ${index === currentIndex ? 'active' : ''}`;
@@ -52,26 +53,25 @@ function displayStations() {
             <h3>${station.name}</h3>
             <p>${station.description}</p>
         `;
-        
+
         card.onclick = () => {
             currentIndex = index;
-            loadStation(station);
+            loadStation(stations[currentIndex]);
             displayStations();
         };
-        
+
         stationsList.appendChild(card);
     });
 }
 
-// ✓ Load & Play Station
+// Load Station
 function loadStation(station) {
     audio.src = station.stream;
     stationName.textContent = station.name;
     songTitle.textContent = 'Loading... ⏳';
-    
+
     audio.play()
         .then(() => {
-            isPlaying = true;
             playPauseIcon.className = 'fas fa-pause';
             albumPlaceholder.classList.add('playing');
             songTitle.textContent = '✅ Live Broadcast';
@@ -79,54 +79,56 @@ function loadStation(station) {
         .catch(error => {
             console.error('Error:', error);
             songTitle.textContent = '❌ Cannot play - Try another station';
-            isPlaying = false;
             playPauseIcon.className = 'fas fa-play';
             albumPlaceholder.classList.remove('playing');
         });
 }
 
-// ✓ Play/Pause
+// Play/Pause
 playPauseBtn.onclick = () => {
     if (!audio.src) {
         songTitle.textContent = 'Select a station first';
         return;
     }
-    
+
     if (audio.paused) {
-        audio.play();
-        isPlaying = true;
-        playPauseIcon.className = 'fas fa-pause';
-        albumPlaceholder.classList.add('playing');
-        songTitle.textContent = '✅ Live Broadcast';
+        audio.play()
+            .then(() => {
+                playPauseIcon.className = 'fas fa-pause';
+                albumPlaceholder.classList.add('playing');
+                songTitle.textContent = '✅ Live Broadcast';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     } else {
         audio.pause();
-        isPlaying = false;
         playPauseIcon.className = 'fas fa-play';
         albumPlaceholder.classList.remove('playing');
         songTitle.textContent = '⏸ Paused';
     }
 };
 
-// ✓ Volume Control
+// Volume Control
 volumeSlider.oninput = (e) => {
     audio.volume = e.target.value;
 };
 
-// ✓ Previous Station
-document.getElementById('prev-btn').onclick = () => {
+// Previous Station
+prevBtn.onclick = () => {
     currentIndex = (currentIndex - 1 + stations.length) % stations.length;
     loadStation(stations[currentIndex]);
     displayStations();
 };
 
-// ✓ Next Station
-document.getElementById('next-btn').onclick = () => {
+// Next Station
+nextBtn.onclick = () => {
     currentIndex = (currentIndex + 1) % stations.length;
     loadStation(stations[currentIndex]);
     displayStations();
 };
 
-// ✓ Stream Events
+// Stream Events
 audio.onplaying = () => {
     songTitle.textContent = '✅ Live Broadcast';
 };
@@ -137,7 +139,6 @@ audio.onpause = () => {
 
 audio.onerror = () => {
     songTitle.textContent = '❌ Stream Error - Try another station';
-    isPlaying = false;
     playPauseIcon.className = 'fas fa-play';
     albumPlaceholder.classList.remove('playing');
 };
@@ -146,6 +147,6 @@ audio.onwaiting = () => {
     songTitle.textContent = '⏳ Loading...';
 };
 
-// ✓ Initialize
+// Initialize
 displayStations();
 audio.volume = volumeSlider.value;
