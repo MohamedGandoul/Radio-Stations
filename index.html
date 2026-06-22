@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German Knowledge Radio</title>
+    <title>German Radio - Premium Glass Edition</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Animated Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
     <div class="container">
-        <header class="header">
-            <h1>📚 German Knowledge Radio</h1>
-            <p>Learn, listen, and stay informed with premium educational & news stations</p>
+        <header class="header glass-panel">
+            <h1>📻 German Vibes Live</h1>
+            <p>Experience the best of Germany in crystal clear audio</p>
         </header>
 
-        <div class="player">
+        <div class="player glass-panel">
+            <div class="album-art">
+                <div class="album-placeholder">
+                    <i class="fas fa-headphones-alt"></i>
+                </div>
+            </div>
+
+            <div class="visualizer" id="equalizer">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div>
+            </div>
+
             <div class="song-info">
                 <h2 id="station-name">Select a Station</h2>
-                <p id="song-title">Ready to stream knowledge 🎧</p>
+                <p id="song-title">Awaiting your choice... ✨</p>
             </div>
 
             <div class="controls">
-                <button id="prev-btn" class="control-btn" title="Previous"><i class="fas fa-backward"></i></button>
+                <button id="prev-btn" class="control-btn" title="Previous"><i class="fas fa-step-backward"></i></button>
                 <button id="play-pause-btn" class="play-pause-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
-                <button id="next-btn" class="control-btn" title="Next"><i class="fas fa-forward"></i></button>
+                <button id="next-btn" class="control-btn" title="Next"><i class="fas fa-step-forward"></i></button>
             </div>
 
             <div class="volume-control">
@@ -35,14 +51,16 @@
             <audio id="audio-player"></audio>
         </div>
 
-        <div class="stations-section">
-            <h2>📖 Info & Educational Channels</h2>
+        <div class="stations-section glass-panel">
+            <h2>🎧 Top 15 German Stations</h2>
             <div id="stations-list" class="stations-list"></div>
         </div>
 
-        <footer class="footer">
+        <footer class="footer glass-panel">
             <div class="footer-content">
-                <p>✨ Made with 💛 by <strong>Mohamed Gandoul</strong> (@Pepo)</p>
+                <p class="made-by">✨ Made with 💛 by <strong>Mohamed Gandoul</strong></p>
+                <p class="nickname">Nickname: <strong>@Pepo</strong></p>
+                <p class="fun-fact">🎯 Glassmorphism Edition - Enjoy the vibes!</p>
                 <p class="copyright">DE German Radio © 2026 | Casablanca, Morocco</p>
             </div>
         </footer>
