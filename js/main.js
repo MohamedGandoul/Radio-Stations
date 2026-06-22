@@ -1,4 +1,4 @@
-// German Radio Stations
+// German Radio Stations (10 Stations Now!)
 const stations = [
     {
         name: "Deutschlandfunk",
@@ -8,22 +8,47 @@ const stations = [
     {
         name: "1LIVE",
         stream: "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
-        description: "Young Radio - Music & Entertainment 🎵 (128kbps)"
+        description: "Young Radio - Music & Entertainment 🎵"
     },
     {
         name: "SWR3",
         stream: "http://liveradio.swr.de/sw282p3/swr3/play.mp3",
-        description: "Pop Music & News 🎶 (192kbps)"
+        description: "Pop Music & Hits 🎶 (192kbps)"
     },
     {
         name: "NDR2",
         stream: "http://icecast.ndr.de/ndr/ndr2/niedersachsen/mp3/128/stream.mp3",
-        description: "Radio from Northern Germany 🎸 (128kbps)"
+        description: "Radio from Northern Germany 🎸"
     },
     {
         name: "Antenne Bayern",
         stream: "http://mp3channels.webradio.antenne.de/antenne",
-        description: "Bavarian Music & Entertainment 🎤 (128kbps)"
+        description: "Bavarian Music & Fun 🎤"
+    },
+    {
+        name: "Rock Antenne",
+        stream: "https://stream.rockantenne.de/rockantenne/stream/mp3",
+        description: "Pure Heavy Rock & Classic Metal 🎸⚡"
+    },
+    {
+        name: "TechnoBase.FM",
+        stream: "http://listen.technobase.fm/mp3.pls",
+        description: "HandsUp, Dance & Electronic Beats 🎧🚀"
+    },
+    {
+        name: "WDR 4",
+        stream: "https://wdr-wdr4-live.icecastssl.wdr.de/wdr/wdr4/live/mp3/128/stream.mp3",
+        description: "Good Old Classics & 80s Hits 🕺"
+    },
+    {
+        name: "Jazz Radio Berlin",
+        stream: "http://jazzradio.stream.ne.onstreamnetworks.com/jazzradio.mp3",
+        description: "Smooth & Chill Jazz Vibes 🎷☕"
+    },
+    {
+        name: "RPR1. 90er",
+        stream: "http://stream.rpr1.de/rpr-90er/mp3-128/",
+        description: "Best Flashbacks from the 90s! 💥"
     }
 ];
 
@@ -36,10 +61,10 @@ const stationName = document.getElementById('station-name');
 const songTitle = document.getElementById('song-title');
 const stationsList = document.getElementById('stations-list');
 const albumPlaceholder = document.querySelector('.album-placeholder');
+const equalizer = document.getElementById('equalizer');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 
-// Variables
 let currentIndex = 0;
 
 // Display Stations
@@ -64,89 +89,83 @@ function displayStations() {
     });
 }
 
+// Control UI State
+function setPlayingState(isPlaying) {
+    if (isPlaying) {
+        playPauseIcon.className = 'fas fa-pause';
+        albumPlaceholder.classList.add('playing');
+        equalizer.classList.add('active');
+    } else {
+        playPauseIcon.className = 'fas fa-play';
+        albumPlaceholder.classList.remove('playing');
+        equalizer.classList.remove('active');
+    }
+}
+
 // Load Station
 function loadStation(station) {
     audio.src = station.stream;
     stationName.textContent = station.name;
-    songTitle.textContent = 'Loading... ⏳';
+    songTitle.textContent = 'Tuning in... ⏳⚡';
 
     audio.play()
         .then(() => {
-            playPauseIcon.className = 'fas fa-pause';
-            albumPlaceholder.classList.add('playing');
-            songTitle.textContent = '✅ Live Broadcast';
+            setPlayingState(true);
+            songTitle.textContent = '🎸 Live & Rocking!';
         })
         .catch(error => {
             console.error('Error:', error);
-            songTitle.textContent = '❌ Cannot play - Try another station';
-            playPauseIcon.className = 'fas fa-play';
-            albumPlaceholder.classList.remove('playing');
+            songTitle.textContent = '❌ Offline - Try another channel';
+            setPlayingState(false);
         });
 }
 
-// Play/Pause
+// Play/Pause Toggle
 playPauseBtn.onclick = () => {
     if (!audio.src) {
-        songTitle.textContent = 'Select a station first';
+        songTitle.textContent = '👇 Click a station to start the party!';
         return;
     }
 
     if (audio.paused) {
         audio.play()
             .then(() => {
-                playPauseIcon.className = 'fas fa-pause';
-                albumPlaceholder.classList.add('playing');
-                songTitle.textContent = '✅ Live Broadcast';
+                setPlayingState(true);
+                songTitle.textContent = '🎸 Live & Rocking!';
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error(error));
     } else {
         audio.pause();
-        playPauseIcon.className = 'fas fa-play';
-        albumPlaceholder.classList.remove('playing');
-        songTitle.textContent = '⏸ Paused';
+        setPlayingState(false);
+        songTitle.textContent = '⏸ Paused Party';
     }
 };
 
-// Volume Control
 volumeSlider.oninput = (e) => {
     audio.volume = e.target.value;
 };
 
-// Previous Station
 prevBtn.onclick = () => {
     currentIndex = (currentIndex - 1 + stations.length) % stations.length;
     loadStation(stations[currentIndex]);
     displayStations();
 };
 
-// Next Station
 nextBtn.onclick = () => {
     currentIndex = (currentIndex + 1) % stations.length;
     loadStation(stations[currentIndex]);
     displayStations();
 };
 
-// Stream Events
-audio.onplaying = () => {
-    songTitle.textContent = '✅ Live Broadcast';
-};
-
-audio.onpause = () => {
-    if (audio.src) songTitle.textContent = '⏸ Paused';
-};
-
+// Listeners
+audio.onplaying = () => setPlayingState(true);
+audio.onpause = () => setPlayingState(false);
+audio.onwaiting = () => { songTitle.textContent = 'Buffering the good vibes... ⏳'; };
 audio.onerror = () => {
-    songTitle.textContent = '❌ Stream Error - Try another station';
-    playPauseIcon.className = 'fas fa-play';
-    albumPlaceholder.classList.remove('playing');
+    songTitle.textContent = '💥 Stream Error - Jump to next!';
+    setPlayingState(false);
 };
 
-audio.onwaiting = () => {
-    songTitle.textContent = '⏳ Loading...';
-};
-
-// Initialize
+// Init
 displayStations();
 audio.volume = volumeSlider.value;
